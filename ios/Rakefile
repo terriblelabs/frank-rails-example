@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+$:.unshift("/Library/RubyMotion/lib")
+require 'motion/project/template/ios'
+
+begin
+  require 'bundler'
+  Bundler.require
+rescue LoadError
+end
+
+namespace :frank do
+  task :set_env do
+    ENV['API_HOST'] = '127.0.0.1:3000'
+    ENV['API_FIXTURE_DIR'] = File.join File.expand_path(File.dirname(__FILE__)), "../rails/frank_fixtures"
+  end
+
+  task run: :set_env
+end
+
+Motion::Project::App.setup do |app|
+  # Use `rake config' to see complete project settings.
+  app.name = 'beerlist'
+  app.env["API_HOST"] = ENV['API_HOST'] || 'localhost:3000'
+end
